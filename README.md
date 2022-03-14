@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
 
 # mongoose-express-liquid-boilerplate
@@ -91,3 +92,44 @@ router.delete('/:id', (req, res) => {
 1. All content is licensed under a CC­BY­NC­SA 4.0 license.
 1. All software code is licensed under GNU GPLv3. For commercial use or
     alternative licensing, please contact legal@ga.co.
+=======
+# Project Management Application
+
+## Description
+This application allows users to collaborate on a project my creating project dashboards and will allow a user to create, edit, delete, and comment on project tasks.
+
+## User Story
+1. A user can sign in or sign up.
+2. When the user logs into their account, their homepage will be a list of their project dashboards.
+3. A user can click on a project dashboard to view it.
+4. Inside a project dashboard are 5 categories viewed as columns: Backlog, Need Help, In Progress, In Review, and Ready.
+5. The user can create a task and select which category to place it in.
+6. A user is able to only delete their own tasks and project dashboards.
+7. Users can comment on each others tasks when viewing a single task.
+8. Once finished, the user may sign out.
+
+## Wireframes
+![SignIn](signin.png)
+
+## ERD
+1[ERD]()
+
+## Technologies Used
+- NodeJS
+- LiquidJS
+- MongoDB
+- Mongoose
+- CSS
+- ExpressJS
+
+## MVP
+- Get user to sign up and log in.
+- Get user to create a project dashboard and create news tasks for a category.
+- Get user to delete project dashboards and tasks
+- Get user to edit their own tasks
+- Get user to comment on tasks.
+
+
+## Stretch Plan
+- Create drag and drop for tasks.
+>>>>>>> 837616e413b5eac9bde0ca27dc0694fa326331b9
