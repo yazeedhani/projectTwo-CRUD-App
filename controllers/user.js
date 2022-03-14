@@ -1,18 +1,14 @@
-////////////////////////////////////////////
-// Import Dependencies
-////////////////////////////////////////////
+/***************** DEPENDENCIES ******************/
 const express = require('express')
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 
-////////////////////////////////////////////
-// Create router
-////////////////////////////////////////////
+/***************** Create Router ******************/
 const router = express.Router()
 
 
-// Routes
-
+/***************** Routes ******************/
+// Two sign up routes
 // GET to render the signup form
 router.get('/signup', (req, res) => {
 	res.render('auth/signup')
@@ -21,7 +17,7 @@ router.get('/signup', (req, res) => {
 // POST to send the signup info
 router.post('/signup', async (req, res) => {
 	// set the password to hashed password
-  req.body.password = await bcrypt.hash(
+  	req.body.password = await bcrypt.hash(
 		req.body.password,
 		await bcrypt.genSalt(10)
 	)
@@ -37,7 +33,7 @@ router.post('/signup', async (req, res) => {
 		})
 })
 
-// two login routes
+// Two login routes
 // get to render the login form
 router.get('/login', (req, res) => {
 	res.render('auth/login')
@@ -53,12 +49,14 @@ router.post('/login', async (req, res) => {
 	User.findOne({ username: username })
 		.then(async (user) => {
 			// check if the user exists
-			if (user) {
+			if (user) 
+			{
 				// compare the password
 				// bcrypt.compare evaluates to a truthy or a falsy value
 				const result = await bcrypt.compare(password, user.password)
 
-				if (result) {
+				if (result) 
+				{
 					console.log('the user', user);
 
           			const { username, loggedIn, userId } = req.session
@@ -66,11 +64,15 @@ router.post('/login', async (req, res) => {
 					console.log('session user id', req.session.userId)
 					// redirect to /examples if login is successful
 					res.redirect('/')
-				} else {
+				} 
+				else 
+				{
 					// send an error if the password doesnt match
 					res.redirect('/error?error=username%20or%20password%20incorrect')
 				}
-			} else {
+			} 
+			else 
+			{
 				// send an error if the user doesnt exist
 				res.redirect('/error?error=That%20user%20does%20not%20exist')
 			}

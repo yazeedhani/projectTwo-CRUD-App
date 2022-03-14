@@ -12,12 +12,20 @@ const UserSchema = new Schema(
 		password: { 
 			type: String, 
 			required: true 
+		},
+		firstName: {
+			type: String,
+			required: true
+		},
+		lastName: {
+			type: String,
+			required: true
 		}
 	},
 	{ timestamps: true }
 )
 
-// creat the model
+// create the model
 const User = model('User', UserSchema)
 
 // export the model

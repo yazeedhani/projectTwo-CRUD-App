@@ -1,6 +1,4 @@
-////////////////////
-//  Dependencies  //
-////////////////////
+/***************** DEPENDENCIES ******************/
 require("dotenv").config() // make env variables available
 const express = require("express")
 const middleware = require('./utils/middleware')
@@ -10,16 +8,15 @@ const User = require("./models/user")
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
 // user and resource routes linked in ./utils/middleware.js
 
-//////////////////////////////
-// Middleware + App Object  //
-//////////////////////////////
+/***************** Middleware + Express Application Object ******************/
 const app = require("liquid-express-views")(express())
 
 middleware(app)
 
-////////////////////
-//    Routes      //
-////////////////////
+/***************** Routes ******************/
+app.get('/', (req, res) => {
+	res.send('App running')
+})
 
 app.use('/auth', UserRouter)
 app.use('/examples', ExampleRouter)
@@ -42,9 +39,7 @@ app.all('*', (req, res) => {
 
 
 
-//////////////////////////////
-//      App Listener        //
-//////////////////////////////
+/***************** Server Listener ******************/
 app.listen(process.env.PORT, () => {
     console.log(`listening on port ${process.env.PORT}`)
 })
