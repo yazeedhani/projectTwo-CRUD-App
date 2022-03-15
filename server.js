@@ -13,10 +13,6 @@ const app = require("liquid-express-views")(express())
 middleware(app)
 
 /***************** Routes ******************/
-app.get('/', (req, res) => {
-	res.send('App running')
-})
-
 app.use('/auth', UserRouter)
 app.use('/projects', projectRouter)
 

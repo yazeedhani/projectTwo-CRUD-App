@@ -1,16 +1,16 @@
 {% layout 'layout.liquid'%}
 {% block content %}
 <div>
-    <h2 class="display-6">All Examples</h2>
+    <h2 class="display-6">All My Projects</h2>
     <div class="row">
-        {% for example in examples %}
+        {% for project in projects %}
         <div class="card" style="width: 18rem;">
-            <h5 class="card-header">{{ example.title }}</h5>
+            <h5 class="card-header">{{ project.name }}</h5>
             <div class="card-body">
                 <h5 class="card-title">
-                    Ready?: {{ example.ready }}
+                    Owner: {{ project.owner }}
                 </h5>
-                <p class="card-text">
+                <!-- <p class="card-text">
                     Body: {{ example.body }}
                 </p>
                 <p class="card-text">
@@ -18,7 +18,7 @@
                 </p>
                 <a href="/examples/{{ example.id }}" class="btn btn-info">
                     View {{ example.title }}
-                </a>
+                </a> -->
             </div>
         </div>
         {% endfor %}

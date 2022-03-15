@@ -22,26 +22,26 @@ router.use((req, res, next) => {
 // Routes
 
 // index ALL
-router.get('/', (req, res) => {
-	Project.find({})
-		.then(examples => {
-			const username = req.session.username
-			const loggedIn = req.session.loggedIn
+// router.get('/', (req, res) => {
+// 	Project.find({})
+// 		.then(examples => {
+// 			const username = req.session.username
+// 			const loggedIn = req.session.loggedIn
 			
-			res.render('examples/index', { examples, username, loggedIn })
-		})
-		.catch(error => {
-			res.redirect(`/error?error=${error}`)
-		})
-})
+// 			res.render('examples/index', { examples, username, loggedIn })
+// 		})
+// 		.catch(error => {
+// 			res.redirect(`/error?error=${error}`)
+// 		})
+// })
 
-// index that shows only the user's examples
+// index that shows only the user's projects
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
 	Project.find({ owner: userId })
-		.then(examples => {
-			res.render('examples/index', { examples, username, loggedIn })
+		.then( projects => {
+			res.render('project/index', { projects, username, loggedIn })
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)

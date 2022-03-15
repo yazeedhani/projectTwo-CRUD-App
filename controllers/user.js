@@ -60,11 +60,12 @@ router.post('/login', async (req, res) => {
 					console.log('the user', user);
 					// then we'll need to use the session object.
                     // store some properties in the session object.
-          			const { username, loggedIn, userId } = req.session
-
+					req.session.username = username
+					req.session.loggedIn = true
+					req.session.userId = user.id
 					console.log('session user id', req.session.userId)
 					// redirect to /examples if login is successful
-					res.redirect('/')
+					res.redirect('/projects/mine')
 				} 
 				else 
 				{
@@ -89,7 +90,7 @@ router.post('/login', async (req, res) => {
 // logout route -> destroy the session
 router.get('/logout', (req, res) => {
 	req.session.destroy(() => {
-		res.redirect('/')
+		res.redirect('/auth/login')
 	})
 })
 
