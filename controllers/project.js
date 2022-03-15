@@ -98,11 +98,11 @@ router.put('/:id', (req, res) => {
 
 // show route
 router.get('/:id', (req, res) => {
-	const exampleId = req.params.id
-	Project.findById(exampleId)
-		.then(example => {
+	const projectId = req.params.id
+	Project.findById(projectId)
+		.then( project => {
             const {username, loggedIn, userId} = req.session
-			res.render('examples/show', { example, username, loggedIn, userId })
+			res.render('project/show', { project, username, loggedIn, userId })
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)

@@ -12,20 +12,18 @@ const { Schema, model } = mongoose
 const projectSchema = new Schema(
 	{
 		name: { type: String, required: true },
-		// Tasks: { type: String, required: true },
-		// group: { 
-			// [
-			// 	type: Schema.Types.ObjectID,
-			// 	ref: 'User',
-			// ]
-		// },
+		// Tasks: { type: String },
+		// group: 
+		// 	[
+		// 		{ 	type: Schema.Types.ObjectID,
+		// 			ref: 'User'
+		// 		}
+		// 	],
 		owner: {
 			type: Schema.Types.ObjectID,
-			ref: 'User',
+			ref: 'User'
 		}
-	},
-	{ timestamps: true }
-)
+	}, { timestamps: true })
 
 const Project = model('Project', projectSchema)
 
