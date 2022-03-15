@@ -2,7 +2,7 @@
 require("dotenv").config() // make env variables available
 const express = require("express")
 const middleware = require('./utils/middleware')
-const ExampleRouter = require('./controllers/example')
+const projectRouter = require('./controllers/project')
 const UserRouter = require('./controllers/user')
 const User = require("./models/user")
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
@@ -10,7 +10,6 @@ const User = require("./models/user")
 
 /***************** Middleware + Express Application Object ******************/
 const app = require("liquid-express-views")(express())
-
 middleware(app)
 
 /***************** Routes ******************/
@@ -19,7 +18,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/auth', UserRouter)
-app.use('/examples', ExampleRouter)
+app.use('/projects', projectRouter)
 
 app.get('/', (req, res) => {
     const { username, userId, loggedIn } = req.session

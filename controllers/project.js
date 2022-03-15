@@ -1,6 +1,6 @@
 // Import Dependencies
 const express = require('express')
-const Example = require('../models/example')
+const Project = require('../models/project')
 
 // Create router
 const router = express.Router()
@@ -23,7 +23,7 @@ router.use((req, res, next) => {
 
 // index ALL
 router.get('/', (req, res) => {
-	Example.find({})
+	Project.find({})
 		.then(examples => {
 			const username = req.session.username
 			const loggedIn = req.session.loggedIn
@@ -39,7 +39,7 @@ router.get('/', (req, res) => {
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
-	Example.find({ owner: userId })
+	Project.find({ owner: userId })
 		.then(examples => {
 			res.render('examples/index', { examples, username, loggedIn })
 		})
@@ -59,7 +59,7 @@ router.post('/', (req, res) => {
 	req.body.ready = req.body.ready === 'on' ? true : false
 
 	req.body.owner = req.session.userId
-	Example.create(req.body)
+	Project.create(req.body)
 		.then(example => {
 			console.log('this was returned from create', example)
 			res.redirect('/examples')
@@ -73,7 +73,7 @@ router.post('/', (req, res) => {
 router.get('/:id/edit', (req, res) => {
 	// we need to get the id
 	const exampleId = req.params.id
-	Example.findById(exampleId)
+	Project.findById(exampleId)
 		.then(example => {
 			res.render('examples/edit', { example })
 		})
@@ -87,7 +87,7 @@ router.put('/:id', (req, res) => {
 	const exampleId = req.params.id
 	req.body.ready = req.body.ready === 'on' ? true : false
 
-	Example.findByIdAndUpdate(exampleId, req.body, { new: true })
+	Project.findByIdAndUpdate(exampleId, req.body, { new: true })
 		.then(example => {
 			res.redirect(`/examples/${example.id}`)
 		})
@@ -99,7 +99,7 @@ router.put('/:id', (req, res) => {
 // show route
 router.get('/:id', (req, res) => {
 	const exampleId = req.params.id
-	Example.findById(exampleId)
+	Project.findById(exampleId)
 		.then(example => {
             const {username, loggedIn, userId} = req.session
 			res.render('examples/show', { example, username, loggedIn, userId })
@@ -112,7 +112,7 @@ router.get('/:id', (req, res) => {
 // delete route
 router.delete('/:id', (req, res) => {
 	const exampleId = req.params.id
-	Example.findByIdAndRemove(exampleId)
+	Project.findByIdAndRemove(exampleId)
 		.then(example => {
 			res.redirect('/examples')
 		})

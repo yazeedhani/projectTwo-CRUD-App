@@ -34,14 +34,14 @@ router.post('/signup', async (req, res) => {
 })
 
 // Two login routes
-// get to render the login form
+// GET to render the login form
 router.get('/login', (req, res) => {
 	res.render('auth/login')
 })
-// post to send the login info(and create a session)
+// POST to send the login info(and create a session)
 router.post('/login', async (req, res) => {
 	// console.log('request object', req)
-	// get the data from the request body
+	// get the data(username and password) from the request body
 	console.log('req.body', req.body);
 	
 	const { username, password } = req.body
@@ -49,16 +49,17 @@ router.post('/login', async (req, res) => {
 	User.findOne({ username: username })
 		.then(async (user) => {
 			// check if the user exists
-			if (user) 
+			if(user) 
 			{
 				// compare the password
 				// bcrypt.compare evaluates to a truthy or a falsy value
 				const result = await bcrypt.compare(password, user.password)
 
-				if (result) 
+				if(result) 
 				{
 					console.log('the user', user);
-
+					// then we'll need to use the session object.
+                    // store some properties in the session object.
           			const { username, loggedIn, userId } = req.session
 
 					console.log('session user id', req.session.userId)
