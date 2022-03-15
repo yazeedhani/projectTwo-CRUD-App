@@ -1,37 +1,24 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 <div class="container-sm">
-    <form action="/examples" method="POST">
+    <form action="/projects" method="POST">
         <fieldset>
-            <legend>Create New Example</legend>
-            <label class="form-label">Title: </label>
+            <legend>Create New Project</legend>
+            <label class="form-label">Project Name: </label>
             <input 
                 type="text" 
-                name="title" 
-                placeholder="enter example title"
+                name="name" 
+                placeholder="Project Name"
                 class="form-control"
             >
-            <label class="form-label">Body:</label>
+            <label class="form-label">Project Members:</label>
             <input 
                 type="text" 
-                name="body" 
-                placeholder="enter example body" 
+                name="group" 
                 class="form-control"
-            >
-            <label class="form-label">Amount:</label>
-            <input 
-                type="number" 
-                name="amount" 
-                class="form-control"
-            >
-            <label class="form-label">Ready:</label>
-            <input 
-                type="checkbox" 
-                name="ready" 
-                class="form-check-input"
             >
         </fieldset>
-        <input type="submit" value="Create New Example" class="btn btn-success">
+        <input type="submit" value="Create New Project" class="btn btn-success">
     </form>
 </div>
 {% endblock %}

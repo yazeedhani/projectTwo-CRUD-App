@@ -11,7 +11,7 @@ const { Schema, model } = mongoose
 
 const projectSchema = new Schema(
 	{
-		Name: { type: String, required: true },
+		name: { type: String, required: true },
 		// Tasks: { type: String, required: true },
 		// group: { 
 			// [

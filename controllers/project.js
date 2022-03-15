@@ -19,7 +19,7 @@ router.use((req, res, next) => {
 	}
 })
 
-// Routes
+/***************** Routes ******************/
 
 // index ALL
 // router.get('/', (req, res) => {
@@ -35,7 +35,7 @@ router.use((req, res, next) => {
 // 		})
 // })
 
-// index that shows only the user's projects
+// INDEX that shows only the user's projects
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
@@ -48,34 +48,34 @@ router.get('/mine', (req, res) => {
 		})
 })
 
-// new route -> GET route that renders our page with the form
+/************** New and Create routes (Create new project) *****************/
+// NEW route -> GET route that renders our page with the form
 router.get('/new', (req, res) => {
 	const { username, userId, loggedIn } = req.session
-	res.render('examples/new', { username, loggedIn })
+	res.render('project/new', { username, loggedIn })
 })
 
-// create -> POST route that actually calls the db and makes a new document
+// CREATE -> POST route that actually calls the db and makes a new document
 router.post('/', (req, res) => {
-	req.body.ready = req.body.ready === 'on' ? true : false
-
 	req.body.owner = req.session.userId
 	Project.create(req.body)
-		.then(example => {
-			console.log('this was returned from create', example)
-			res.redirect('/examples')
+		.then( project => {
+			console.log('this was returned from create', project)
+			res.redirect('/projects/mine')
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
+/******************************************************/
 
 // edit route -> GET that takes us to the edit form view
 router.get('/:id/edit', (req, res) => {
 	// we need to get the id
-	const exampleId = req.params.id
-	Project.findById(exampleId)
-		.then(example => {
-			res.render('examples/edit', { example })
+	const projectId = req.params.id
+	Project.findById(projectId)
+		.then(project => {
+			res.render('examples/edit', { project })
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)
@@ -109,17 +109,21 @@ router.get('/:id', (req, res) => {
 		})
 })
 
-// delete route
+// DELETE route --> delete a project
 router.delete('/:id', (req, res) => {
-	const exampleId = req.params.id
-	Project.findByIdAndRemove(exampleId)
-		.then(example => {
-			res.redirect('/examples')
+	// Get the project id
+	const projectId = req.params.id
+	// Delete the project
+	Project.findByIdAndRemove(projectId)
+		.then(project => {
+			console.log('this is the response from FBID ', project)
+			res.redirect('/projects/mine')
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
+/******************************************************/
 
 // Export the Router
 module.exports = router
