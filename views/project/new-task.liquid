@@ -1,0 +1,27 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+<div class="container-sm">
+    <form action="/projects/{{projectId}}/new" method="POST">
+        <fieldset>
+            <legend>Create New Task</legend>
+            <label class="form-label">Task Name: </label>
+            <input 
+                type="text" 
+                name="name" 
+                placeholder="Task Name"
+                class="form-control"
+            >
+            <select name="category" class="form-control">
+                <option>Backlog</option>
+                <option>Need Help</option>
+                <option>In Progress</option>
+                <option>In Review</option>
+                <option>Ready</option>
+            </select>
+            <textarea name="description" cols="30" rows="10" placeholder="Task description"></textarea>
+
+        </fieldset>
+        <input type="submit" value="Create New Task" class="btn btn-success">
+    </form>
+</div>
+{% endblock %}

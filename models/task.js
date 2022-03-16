@@ -6,6 +6,7 @@ const commentSchema = require('./comment.js')
 
 // import user model for populate
 const User = require('./user')
+const Project = require('./project')
 
 // destructure the schema and model constructors from mongoose
 const { Schema, model } = mongoose
@@ -19,11 +20,19 @@ const taskSchema = new Schema({
     {
         type: String
     },
+    category: {
+        type: String,
+        required: true
+    },
     owner: {
         type: Schema.Types.ObjectID,
 		ref: 'User',
     },
-    comment: [commentSchema]
+    project: {
+			type: Schema.Types.ObjectID,
+			ref: 'Project'
+    }
+    // comment: [commentSchema]
 }, {timestamps: true})
 
 // Make our Task model that will use the Schema
