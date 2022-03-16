@@ -124,13 +124,14 @@ router.post('/:id/new', (req, res) => {
 /******************************************************/
 
 /************** Edit and Update routes (update project) *****************/
-// EDIT route -> GET that takes us to the edit form view
+// EDIT route -> GET that takes us to the edit form view to just change the project name
 router.get('/:id/edit', (req, res) => {
 	// we need to get the id
 	const projectId = req.params.id
 	Project.findById(projectId)
 		.then(project => {
-			res.render('examples/edit', { project })
+			const {username, loggedIn, userId} = req.session
+			res.render('project/edit', { project, username, loggedIn, userId })
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)
@@ -139,12 +140,14 @@ router.get('/:id/edit', (req, res) => {
 
 // UPDATE route
 router.put('/:id', (req, res) => {
-	const exampleId = req.params.id
-	req.body.ready = req.body.ready === 'on' ? true : false
-
-	Project.findByIdAndUpdate(exampleId, req.body, { new: true })
-		.then(example => {
-			res.redirect(`/examples/${example.id}`)
+	// Get the project ID
+	const projectId = req.params.id
+	const projectName = req.body.name
+	console.log('this is the project id: ', projectId)
+	// Tell Mongoose to update the project
+	Project.findByIdAndUpdate(projectId, {name: projectName}, { new: true })
+		.then( project => {
+			res.redirect(`/projects/${projectId}`)
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)
@@ -152,15 +155,14 @@ router.put('/:id', (req, res) => {
 })
 /******************************************************/
 
-// SHOW route --> show an individual project dashbaord.
+// SHOW route --> show an individual project dashbaord and its tasks.
 router.get('/:id', (req, res) => {
+	// Get the current project ID
 	const projectId = req.params.id
-	// Find project by ID
 	const {username, loggedIn, userId} = req.session
-	// Find 1 project by ID in params
+	// Find the 1 project by ID in params
 	const projectQuery = Project.findById(projectId)
 		.populate('owner')
-		// .populate('tasks')
 		.then( project => {
 			// Display task owner on each task in project dashboard
 			
@@ -172,13 +174,13 @@ router.get('/:id', (req, res) => {
 	const taskQuery = Task.find({project: projectId})
 		.populate('owner')
 		.then( tasks => {
-			console.log('these are the tasks for this project: ', tasks)
+			// console.log('these are the tasks for this project: ', tasks)
 			return tasks
 		})
-
+	
+	// Catch all the promises from above (projectQuery, taskQuery)
 	Promise.all([projectQuery, taskQuery])
 		.then( response => {
-			// res.json(response)
 			const project = response[0]
 			const tasks = response[1]
 			res.render('project/show', { project, tasks, username, loggedIn, userId })
@@ -188,10 +190,11 @@ router.get('/:id', (req, res) => {
 		})
 })
 
-// DELETE project task --> delete a task
+// DELETE project task --> delete a task from the tasks and projects collections
 router.delete('/:id/:taskId', (req, res) => {
-	// Get the task id
+	// Get the task id and project
 	const taskId = req.params.taskId
+	const projectId = req.params.id
 	Task.findByIdAndRemove(taskId)
 		.then( task => {
 			console.log('this is the response from FBID ', task)
@@ -201,6 +204,18 @@ router.delete('/:id/:taskId', (req, res) => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
+// router.delete('/:id/:taskId', (req, res) => {
+// 	// Get the task id
+// 	const taskId = req.params.taskId
+// 	Task.findByIdAndRemove(taskId)
+// 		.then( task => {
+// 			console.log('this is the response from FBID ', task)
+// 			res.redirect(`/projects/${task.project}`)
+// 		})
+// 		.catch(error => {
+// 			res.redirect(`/error?error=${error}`)
+// 		})
+// })
 // DELETE project route --> delete a project and its tasks
 router.delete('/:id', (req, res) => {
 	// Get the project id
