@@ -1,6 +1,7 @@
 // Import Dependencies
 const express = require('express')
-const { redirect } = require('express/lib/response')
+const { route } = require('express/lib/application')
+const { redirect, render } = require('express/lib/response')
 const Project = require('../models/project')
 const Task = require('../models/task')
 const { populate } = require('../models/user')
@@ -43,7 +44,8 @@ router.use((req, res, next) => {
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
-	Project.find({ owner: userId })
+	// Display the projects you created and the projects you are a group memeber of
+	Project.find({ $or: [{ owner: userId }, {group: { $in: [username] } }] })
 		// gives you back thew whole object associated with the ID queried above
 		.populate('owner')
 		.then( projects => {
@@ -59,16 +61,6 @@ router.get('/mine', (req, res) => {
 // NEW route -> GET route that renders our page with the new project dashboard form
 router.get('/new', (req, res) => {
 	// need a list of all users to pass to the form below to show in the view
-	// let usersList = []
-	// User.find({}, "username")
-	// 	.then( users => {
-	// 		console.log(users)
-	// 		usersList = users
-	// 		console.log(usersList)
-	// 	})
-	// 	.catch( error => {
-	// 		console.log(error)
-	// 	})
 	const { username, userId, loggedIn } = req.session
 	res.render('project/new-project', { username, loggedIn })
 })
@@ -76,10 +68,17 @@ router.get('/new', (req, res) => {
 // CREATE -> POST route that actually calls the db and makes a new document (new project dashboard)
 router.post('/', (req, res) => {
 	// this is where you push the users to the group array in Project
+	console.log(req.body)
 	req.body.owner = req.session.userId
+	// The group memebers will be entered in the form as a comma-separated list
+	// Need to split that list into an array and update it to req.body.group
+	let groupMembers = req.body.group.split(',')
+	req.body.group = groupMembers
 	console.log(req.body)
 	Project.create(req.body)
 		.then( project => {
+			project.group.push(req.session.username)
+			project.save()
 			console.log('this was returned from create', project)
 			res.redirect('/projects/mine')
 		})
@@ -155,6 +154,18 @@ router.put('/:id', (req, res) => {
 })
 /******************************************************/
 
+// SHOW route --> show an individual task in a project dashboard.
+// router.get('/:id/:taskId/view', (req, res) => {
+// 	// const projectId = req.params.id
+// 	const taskId = req.params.taskId
+// 	Task.findById(taskId)
+// 		.then( task => {
+// 			res.render()
+// 		})
+// 	res.send('view task')
+// })
+
+
 // SHOW route --> show an individual project dashbaord and its tasks.
 router.get('/:id', (req, res) => {
 	// Get the current project ID
@@ -164,12 +175,11 @@ router.get('/:id', (req, res) => {
 	const projectQuery = Project.findById(projectId)
 		.populate('owner')
 		.then( project => {
-			// Display task owner on each task in project dashboard
-			
-				console.log(project.tasks)
-				console.log(project)
-				return project
-			})
+		// Display task owner on each task in project dashboard
+			console.log(project.tasks)
+			console.log(project)
+			return project
+		})
 	//	Find all the tasks that share the same project ID	
 	const taskQuery = Task.find({project: projectId})
 		.populate('owner')

@@ -1,3 +1,4 @@
+<!-- This view display all the project dashboards for the currently logged in user -->
 {% layout 'layout.liquid'%}
 {% block content %}
 <div>
@@ -10,13 +11,10 @@
                 <h5 class="card-title">
                     Owner: {{ project.owner.username }}
                 </h5>
-                <h6>{{ project.group }}</h6>
-                <!-- <p class="card-text">
-                    Body: {{ example.body }}
-                </p>
-                <p class="card-text">
-                    Amount: {{ example.amount }}
-                </p> -->
+                <!-- Display all the usernames in the group -->
+                {% for user in project.group %}
+                    <h6>{{user}}</h6>
+                {% endfor %}
                 <a href="/projects/{{ project.id }}" class="btn btn-info">
                     View {{ project.name }}
                 </a>

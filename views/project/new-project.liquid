@@ -1,3 +1,4 @@
+<!-- This view is to create a new project dashboard -->
 {% layout 'layout.liquid' %}
 {% block content %}
 <div class="container-sm">
@@ -12,15 +13,13 @@
                 class="form-control"
             >
             <label class="form-label">Project Members:</label>
-            <!-- <input 
+            <input 
                 type="text" 
                 name="group" 
+                placeholder="Enter groups members separated by a comma"
                 class="form-control"
-            > -->
+            >
             
-            <!-- {% for user in usersList %}
-                <input type="checkbox" name="" id="">       
-            {% endfor %} -->
         </fieldset>
         <input type="submit" value="Create New Project" class="btn btn-success">
     </form>

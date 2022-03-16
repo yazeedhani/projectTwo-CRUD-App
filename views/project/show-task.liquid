@@ -1,10 +1,8 @@
-<!-- This views is to change a project dashboard's info -->
 {% layout 'layout.liquid' %}
 {% block content %}
     <div class="container-sm">
-        <form action="/projects/{{project.id}}?_method=PUT" method="POST">
             <fieldset>
-                <legend>Edit {{project.name}}</legend>
+                <legend> {{project.name}} </legend>
                 <label class="form-label">Project Name: </label>
                 <input 
                     type="text" 
@@ -14,6 +12,5 @@
                 >
             </fieldset>
             <input type="submit" value="Edit Project" class="btn btn-success">
-        </form>
     </div>
 {% endblock %}

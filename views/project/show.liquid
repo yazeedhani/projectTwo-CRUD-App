@@ -1,12 +1,12 @@
+<!-- This is displays the project dashboard along with its tasks and the task owner -->
 {% layout 'layout.liquid' %}
 {% block content %}
 <div class="container-md">
     <article>
         <h2>{{ project.name }}</h2>
+        <a href="/projects/{{ project.id }}/new" class="btn btn-success">Create Task</a>
         {% if project.owner == userId %}
         <div class="btn-group">
-
-            <a href="/projects/{{ project.id }}/new" class="btn btn-success">Create Task</a>
             <a href="/projects/{{ project.id }}/edit" class="btn btn-primary">Edit</a>
             <form action="/projects/{{ project.id }}?_method=DELETE" method="POST">
                 <input type="submit" value="Delete" class="btn btn-danger">
@@ -20,7 +20,8 @@
                     <div class="card">
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.owner.username }}</p>
-                        <form action="/projects/{{ task.project.id }}/{{task.id}}?_method=DELETE" method="POST">
+                        <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
+                        <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
                             <input type="submit" value="X" class="btn btn-danger">
                         </form>
                     </div>
@@ -33,7 +34,8 @@
                     <div class="card">
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.owner.username }}</p>
-                        <form action="/projects/{{ task.project.id }}/{{task.id}}?_method=DELETE" method="POST">
+                        <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
+                        <form action="/projects/{{ task.project }}/{{task.id}}?_method=DELETE" method="POST">
                             <input type="submit" value="X" class="btn btn-danger">
                         </form>
                     </div>
@@ -46,7 +48,8 @@
                     <div class="card">
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.owner.username }}</p>
-                        <form action="/projects/{{ task.project.id }}/{{task.id}}?_method=DELETE" method="POST">
+                        <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
+                        <form action="/projects/{{ task.project }}/{{task.id}}?_method=DELETE" method="POST">
                             <input type="submit" value="X" class="btn btn-danger">
                         </form>
                     </div>
@@ -59,8 +62,9 @@
                     <div class="card">
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.owner.username }}</p>
+                        <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
                         <!-- look at task.project.id again -->
-                        <form action="/projects/{{ task.project.id }}/{{task.id}}?_method=DELETE" method="POST">
+                        <form action="/projects/{{ task.project }}/{{task.id}}?_method=DELETE" method="POST">
                             <input type="submit" value="X" class="btn btn-danger">
                         </form>
                     </div>
@@ -73,7 +77,8 @@
                     <div class="card">
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.owner.username }}</p>
-                        <form action="/projects/{{ task.project.id }}/{{task.id}}?_method=DELETE" method="POST">
+                        <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
+                        <form action="/projects/{{ task.project }}/{{task.id}}?_method=DELETE" method="POST">
                             <input type="submit" value="X" class="btn btn-danger">
                         </form>
                     </div>
