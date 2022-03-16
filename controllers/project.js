@@ -54,8 +54,8 @@ router.get('/mine', (req, res) => {
 		})
 })
 
-/************** New and Create routes (Create new project) *****************/
-// NEW route -> GET route that renders our page with the form
+/************** New and Create routes (Create new project dashboard) *****************/
+// NEW route -> GET route that renders our page with the new project dashboard form
 router.get('/new', (req, res) => {
 	// need a list of all users to pass to the form below to show in the view
 	// let usersList = []
@@ -69,10 +69,10 @@ router.get('/new', (req, res) => {
 	// 		console.log(error)
 	// 	})
 	const { username, userId, loggedIn } = req.session
-	res.render('project/new-project', { username, loggedIn, usersList: usersList })
+	res.render('project/new-project', { username, loggedIn })
 })
 
-// CREATE -> POST route that actually calls the db and makes a new document
+// CREATE -> POST route that actually calls the db and makes a new document (new project dashboard)
 router.post('/', (req, res) => {
 	// this is where you push the users to the group array in Project
 	req.body.owner = req.session.userId
@@ -88,8 +88,8 @@ router.post('/', (req, res) => {
 })
 /******************************************************/
 
-/************** New and Create routes (Create new project) *****************/
-// NEW route -> GET route that renders our page with the form
+/************** New and Create routes (Create new ) *****************/
+// NEW route -> GET route that renders our page with the new task form
 router.get('/:id/new', (req, res) => {
 	const { username, userId, loggedIn } = req.session
 	const projectId = req.params.id
@@ -97,7 +97,7 @@ router.get('/:id/new', (req, res) => {
 	res.render('project/new-task', { username, loggedIn, projectId})
 })
 
-// CREATE -> POST route that actually calls the db and makes a new document
+// CREATE -> POST route that actually calls the db and makes a new task 
 router.post('/:id/new', (req, res) => {
 	// get project ID
 	const projectId = req.params.id
@@ -108,16 +108,16 @@ router.post('/:id/new', (req, res) => {
 	req.body.owner = req.session.userId
 	// Create a new task in the tasks collection using the form data
 	Task.create(req.body)
-	.then( task => {
-		// Find the project using the project ID where the task is being created
-		Project.findById(projectId)
-		// Add this task to the tasks array in the project module to keep count of its tasks
-		.then( project => {
-			project.tasks.push(task._id)
-			project.save()
-		})
-		console.log(task)
-		res.redirect(`/projects/${projectId}`)
+		.then( task => {
+			// Find the project using the project ID where the task is being created
+			Project.findById(projectId)
+			// Add this task to the tasks array in the project module to keep count of its tasks
+			.then( project => {
+				project.tasks.push(task._id)
+				project.save()
+			})
+			console.log(task)
+			res.redirect(`/projects/${projectId}`)
 	})
 })
 /******************************************************/
@@ -151,7 +151,7 @@ router.put('/:id', (req, res) => {
 })
 /******************************************************/
 
-// SHOW route
+// SHOW route --> show an individual project dashbaord.
 router.get('/:id', (req, res) => {
 	const projectId = req.params.id
 	Project.findById(projectId)
@@ -159,18 +159,43 @@ router.get('/:id', (req, res) => {
 		.populate('tasks')
 		.then( project => {
             const {username, loggedIn, userId} = req.session
-			console.log(project)
-			res.render('project/show', { project, username, loggedIn, userId })
+			// Display task owner on each task in project dashboard
+			// Task.findById()
+			// 	.populate('owner')
+			// 	.then( tasks => {
+			// 		console.log('these are the tasks for this project: ', tasks)
+			// 	})
+				console.log(project)
+				res.render('project/show', { project, username, loggedIn, userId })
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
 
-// DELETE route --> delete a project
+// DELETE project task --> delete a project and its tasks
+router.delete('/:id/:taskId', (req, res) => {
+	// Get the project id and task id
+	const projectId = req.params.id
+	const taskId = req.params.taskId
+	// Delete project's tasks
+	// Project.findByIdAndUpdate(projectId, {tasks: []}, {new: true})
+	// Delete the project
+	Task.findByIdAndRemove(taskId)
+		.then( task => {
+			console.log('this is the response from FBID ', task)
+			res.redirect(`/projects/${projectId}`)
+		})
+		.catch(error => {
+			res.redirect(`/error?error=${error}`)
+		})
+})
+// DELETE project route --> delete a project and its tasks
 router.delete('/:id', (req, res) => {
 	// Get the project id
 	const projectId = req.params.id
+	// Delete project's tasks
+	// Project.findByIdAndUpdate(projectId, {tasks: []}, {new: true})
 	// Delete the project
 	Project.findByIdAndRemove(projectId)
 		.then(project => {

@@ -20,14 +20,53 @@
                     <div class="card">
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.owner.username }}</p>
+                        <form action="/projects/{{ task.project.id }}/{{task.id}}?_method=DELETE" method="POST">
+                            <input type="submit" value="X" class="btn btn-danger">
+                        </form>
                     </div>
                     {% endif %}
                 {% endfor %}
             </div>
-            <div class="column"><h2>Need Help</h2></div>
-            <div class="column"><h2>In Progress</h2></div>
-            <div class="column"><h2>In Review</h2></div>
-            <div class="column"><h2>Ready</h2></div>
+            <div class="column"><h2>Need Help</h2>
+                {% for task in project.tasks %}
+                    {% if task.category == 'Need Help' %}
+                    <div class="card">
+                        <h3>{{ task.name }}</h3>
+                        <p>{{ task.owner.username }}</p>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="column"><h2>In Progress</h2>
+                {% for task in project.tasks %}
+                    {% if task.category == 'In Progress' %}
+                    <div class="card">
+                        <h3>{{ task.name }}</h3>
+                        <p>{{ task.owner.username }}</p>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="column"><h2>In Review</h2>
+                {% for task in project.tasks %}
+                    {% if task.category == 'In Review' %}
+                    <div class="card">
+                        <h3>{{ task.name }}</h3>
+                        <p>{{ task.owner.username }}</p>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="column"><h2>Ready</h2>
+                {% for task in project.tasks %}
+                    {% if task.category == 'Ready' %}
+                    <div class="card">
+                        <h3>{{ task.name }}</h3>
+                        <p>{{ task.owner.username }}</p>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
           </div> 
     </article>
 </div>
