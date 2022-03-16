@@ -12,7 +12,6 @@ const { Schema, model } = mongoose
 const projectSchema = new Schema(
 	{
 		name: { type: String, required: true },
-		// lowercase tasks here and in controllers and views.
 		tasks: [
 			{
 				type: Schema.Types.ObjectID,
