@@ -10,8 +10,9 @@
                 name="name" 
                 placeholder="Task Name"
                 class="form-control"
+                required
             >
-            <select name="category" class="form-control">
+            <select name="category" class="form-control" required>
                 <option>Backlog</option>
                 <option>Need Help</option>
                 <option>In Progress</option>
@@ -23,5 +24,6 @@
         </fieldset>
         <input type="submit" value="Create New Task" class="btn btn-success">
     </form>
+    <a href="/projects/{{ projectId }}/" class="btn btn-success">Go Back</a>
 </div>
 {% endblock %}

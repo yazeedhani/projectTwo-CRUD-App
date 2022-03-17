@@ -93,7 +93,6 @@ router.post('/', (req, res) => {
 router.get('/:id/new', (req, res) => {
 	const { username, userId, loggedIn } = req.session
 	const projectId = req.params.id
-	// res.send('New task')
 	res.render('task/new-task', { username, loggedIn, projectId})
 })
 
@@ -104,7 +103,6 @@ router.post('/:id/new', (req, res) => {
 	// Add the project and category fields to req.body so it can match the Task schema.
 	// req.body is the data for the task model.
 	req.body.project = projectId
-	// req.body.category = 'backlog'
 	req.body.owner = req.session.userId
 	// Create a new task in the tasks collection using the form data
 	Task.create(req.body)
@@ -154,8 +152,8 @@ router.put('/:id', (req, res) => {
 })
 /******************************************************/
 
-/************** Edit and Update routes (update project) *****************/
-// EDIT route -> GET that takes us to the edit form view to just change the project name
+/************** Edit and Update routes (update task) *****************/
+// EDIT route -> GET that takes us to the edit form view to edit the selected task
 router.get('/:id/:taskId/edit', (req, res) => {
 	const projectId = req.params.id
 	const taskId = req.params.taskId
@@ -168,7 +166,31 @@ router.get('/:id/:taskId/edit', (req, res) => {
 				const {username, loggedIn, userId} = req.session
 				res.render('task/edit-task', {task, username, loggedIn, userId})
 		})
+		.catch((error) => {
+			res.redirect(`/error?error=${error}`)
+		})
 })
+
+// UPDATE route
+router.put('/:id/:taskId', (req, res) => {
+	// Get project ID
+	const projectId = req.params.id
+	// Get task ID
+	const taskId = req.params.taskId
+	// Get the updated info from the submitted edit task form
+	const taskName = req.body.name
+	const taskCategory = req.body.category
+	const taskDescription = req.body.description
+	Task.findByIdAndUpdate(taskId, {name: taskName, category: taskCategory, description: taskDescription}, { new: true })
+		.populate('project')
+		.then( task => {
+			res.redirect(`/projects/${projectId}`)
+		})
+		.catch((error) => {
+			res.redirect(`/error?error=${error}`)
+		})
+})
+
 /******************************************************/
 
 // SHOW route --> show an individual task in a project dashboard.

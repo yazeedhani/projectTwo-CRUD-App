@@ -1,8 +1,8 @@
-<!-- This views is to change a task's info -->
+<!-- This views is to edit a task's info -->
 {% layout 'layout.liquid' %}
 {% block content %}
     <div class="container-sm">
-        <form action="/projects/{{project.id}}?_method=PUT" method="POST">
+        <form action="/projects/{{ task.project.id }}/{{ task.id }}?_method=PUT" method="POST">
             <fieldset>
                 <legend>Edit {{task.name}}</legend>
                 <label class="form-label">Task Name: </label>
@@ -12,6 +12,13 @@
                     value="{{ task.name }}"
                     class="form-control"
                 >
+                <select name="category" class="form-control">
+                    <option>Backlog</option>
+                    <option>Need Help</option>
+                    <option>In Progress</option>
+                    <option>In Review</option>
+                    <option>Ready</option>
+                </select>
                 <textarea name="description" cols="30" rows="10" placeholder="{{ task.description }}"></textarea>
                 <!-- <input 
                     type="text" 
@@ -22,5 +29,6 @@
             </fieldset>
             <input type="submit" value="Edit Task" class="btn btn-success">
         </form>
+        <a href="/projects/{{ task.project.id }}/" class="btn btn-success">Go Back</a>
     </div>
 {% endblock %}
