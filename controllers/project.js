@@ -155,15 +155,18 @@ router.put('/:id', (req, res) => {
 /******************************************************/
 
 // SHOW route --> show an individual task in a project dashboard.
-// router.get('/:id/:taskId/view', (req, res) => {
-// 	// const projectId = req.params.id
-// 	const taskId = req.params.taskId
-// 	Task.findById(taskId)
-// 		.then( task => {
-// 			res.render()
-// 		})
-// 	res.send('view task')
-// })
+router.get('/:id/:taskId/view', (req, res) => {
+	// const projectId = req.params.id
+	const taskId = req.params.taskId
+	const {username, loggedIn, userId} = req.session
+	Task.findById(taskId)
+		.populate('project')
+		.populate('owner')
+		.then( task => {
+			res.render('project/show-task', {task, username, loggedIn, userId})
+		})
+	// res.send('view task')
+})
 
 
 // SHOW route --> show an individual project dashbaord and its tasks.
@@ -205,6 +208,7 @@ router.delete('/:id/:taskId', (req, res) => {
 	// Get the task id and project
 	const taskId = req.params.taskId
 	const projectId = req.params.id
+	// Deletes the task from tasks collection
 	Task.findByIdAndRemove(taskId)
 		.then( task => {
 			console.log('this is the response from FBID ', task)

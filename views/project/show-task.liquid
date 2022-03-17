@@ -1,16 +1,10 @@
 {% layout 'layout.liquid' %}
 {% block content %}
     <div class="container-sm">
-            <fieldset>
-                <legend> {{project.name}} </legend>
-                <label class="form-label">Project Name: </label>
-                <input 
-                    type="text" 
-                    name="name" 
-                    value="{{ project.name }}"
-                    class="form-control"
-                >
-            </fieldset>
-            <input type="submit" value="Edit Project" class="btn btn-success">
+        <p>{{ task.name }}</p>
+        <p>{{ task.description }}</p>
+        <p>{{ task.category }}</p>
+        <p>{{ task.owner.username }}</p>
+        <p>{{ task.project.name }}</p>
     </div>
 {% endblock %}

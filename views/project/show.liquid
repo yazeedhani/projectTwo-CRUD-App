@@ -21,9 +21,11 @@
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.owner.username }}</p>
                         <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
-                        <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
-                            <input type="submit" value="X" class="btn btn-danger">
-                        </form>
+                        {% if project.owner == userId %}
+                            <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
+                                <input type="submit" value="X" class="btn btn-danger">
+                            </form>
+                        {% endif %}
                     </div>
                     {% endif %}
                 {% endfor %}
@@ -35,9 +37,11 @@
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.owner.username }}</p>
                         <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
-                        <form action="/projects/{{ task.project }}/{{task.id}}?_method=DELETE" method="POST">
-                            <input type="submit" value="X" class="btn btn-danger">
-                        </form>
+                        {% if project.owner == userId %}
+                            <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
+                                <input type="submit" value="X" class="btn btn-danger">
+                            </form>
+                        {% endif %}
                     </div>
                     {% endif %}
                 {% endfor %}
@@ -49,9 +53,11 @@
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.owner.username }}</p>
                         <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
-                        <form action="/projects/{{ task.project }}/{{task.id}}?_method=DELETE" method="POST">
-                            <input type="submit" value="X" class="btn btn-danger">
-                        </form>
+                        {% if project.owner == userId %}
+                            <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
+                                <input type="submit" value="X" class="btn btn-danger">
+                            </form>
+                        {% endif %}
                     </div>
                     {% endif %}
                 {% endfor %}
@@ -64,9 +70,11 @@
                         <p>{{ task.owner.username }}</p>
                         <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
                         <!-- look at task.project.id again -->
-                        <form action="/projects/{{ task.project }}/{{task.id}}?_method=DELETE" method="POST">
-                            <input type="submit" value="X" class="btn btn-danger">
-                        </form>
+                        {% if project.owner == userId %}
+                            <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
+                                <input type="submit" value="X" class="btn btn-danger">
+                            </form>
+                        {% endif %}
                     </div>
                     {% endif %}
                 {% endfor %}
@@ -78,9 +86,11 @@
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.owner.username }}</p>
                         <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
-                        <form action="/projects/{{ task.project }}/{{task.id}}?_method=DELETE" method="POST">
-                            <input type="submit" value="X" class="btn btn-danger">
-                        </form>
+                        {% if project.owner == userId %}
+                            <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
+                                <input type="submit" value="X" class="btn btn-danger">
+                            </form>
+                        {% endif %}
                     </div>
                     {% endif %}
                 {% endfor %}
