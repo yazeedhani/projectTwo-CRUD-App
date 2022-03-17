@@ -94,7 +94,7 @@ router.get('/:id/new', (req, res) => {
 	const { username, userId, loggedIn } = req.session
 	const projectId = req.params.id
 	// res.send('New task')
-	res.render('project/new-task', { username, loggedIn, projectId})
+	res.render('task/new-task', { username, loggedIn, projectId})
 })
 
 // CREATE -> POST route that actually calls the db and makes a new task 
@@ -125,7 +125,7 @@ router.post('/:id/new', (req, res) => {
 /************** Edit and Update routes (update project) *****************/
 // EDIT route -> GET that takes us to the edit form view to just change the project name
 router.get('/:id/edit', (req, res) => {
-	// we need to get the id
+	// we need to get the project id
 	const projectId = req.params.id
 	Project.findById(projectId)
 		.then(project => {
@@ -154,6 +154,23 @@ router.put('/:id', (req, res) => {
 })
 /******************************************************/
 
+/************** Edit and Update routes (update project) *****************/
+// EDIT route -> GET that takes us to the edit form view to just change the project name
+router.get('/:id/:taskId/edit', (req, res) => {
+	const projectId = req.params.id
+	const taskId = req.params.taskId
+
+	Task.findById(taskId)
+		.populate('project')
+		.populate('owner')
+		.then( task => {
+				console.log(task)
+				const {username, loggedIn, userId} = req.session
+				res.render('task/edit-task', {task, username, loggedIn, userId})
+		})
+})
+/******************************************************/
+
 // SHOW route --> show an individual task in a project dashboard.
 router.get('/:id/:taskId/view', (req, res) => {
 	// const projectId = req.params.id
@@ -163,7 +180,7 @@ router.get('/:id/:taskId/view', (req, res) => {
 		.populate('project')
 		.populate('owner')
 		.then( task => {
-			res.render('project/show-task', {task, username, loggedIn, userId})
+			res.render('task/show-task', {task, username, loggedIn, userId})
 		})
 })
 
