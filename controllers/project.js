@@ -44,7 +44,7 @@ router.use((req, res, next) => {
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
-	// Display the projects you created and the projects you are a group memeber of
+	// Display the projects you created and the projects you are a group member of
 	Project.find({ $or: [{ owner: userId }, {group: { $in: [username] } }] })
 		// gives you back thew whole object associated with the ID queried above
 		.populate('owner')
@@ -196,14 +196,20 @@ router.put('/:id/:taskId', (req, res) => {
 
 // SHOW route --> show an individual task in a project dashboard.
 router.get('/:id/:taskId/view', (req, res) => {
-	// const projectId = req.params.id
+	const projectId = req.params.id
 	const taskId = req.params.taskId
 	const {username, loggedIn, userId} = req.session
 	Task.findById(taskId)
 		.populate('project')
 		.populate('owner')
 		.then( task => {
-			res.render('task/show-task', {task, username, loggedIn, userId})
+			console.log('THis is the task: ', task)
+			Project.findById(projectId)
+				.populate('owner')
+				.then( project => {
+					console.log('This is the project:' , project)
+					res.render('task/show-task', {project, task, username, loggedIn, userId})
+				})
 		})
 })
 

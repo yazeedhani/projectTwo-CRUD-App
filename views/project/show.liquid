@@ -13,10 +13,16 @@
             </form>
         </div>
         {% endif %}
+        <p>Project owner: {{project.owner.username}}</p>
+        <p>Project members:
+            {% for user in project.group %}
+                {{user}}, 
+            {% endfor %}
+        </p>
         <div class="row">
             <div class="column"><h2>Backlog</h2>
                 {% for task in tasks %}
-                    {% if task.category == 'Backlog' or task.category == 'backlog'%}
+                    {% if task.category == 'Backlog' %}
                     <div class="card">
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.owner.username }}</p>
