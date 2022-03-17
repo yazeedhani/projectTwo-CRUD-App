@@ -1,10 +1,17 @@
 {% layout 'layout.liquid' %}
 {% block content %}
     <div class="container-sm">
-        <p>{{ task.name }}</p>
-        <p>{{ task.description }}</p>
-        <p>{{ task.category }}</p>
-        <p>{{ task.owner.username }}</p>
-        <p>{{ task.project.name }}</p>
+        <h2>Task Name: {{ task.name }}</h2>
+        <p>Description: {{ task.description }}</p>
+        <p>Category: {{ task.category }}</p>
+        <p>Owner: {{ task.owner.username }}</p>
+        <p>Name: {{ task.project.name }}</p>
+        {% if task.owner.id == userId %}
+            <a href="/projects/{{ task.project.id }}/{{ task.id }}/edit" class="btn btn-primary">Edit</a>
+            <a href="/projects/{{ task.project.id }}/" class="btn btn-success">Go Back</a>
+            <form action="/projects/{{ task.project.id }}/{{ task.id }}?_method=DELETE" method="POST">
+                <input type="submit" value="X" class="btn btn-danger">
+            </form>
+        {% endif %}
     </div>
 {% endblock %}

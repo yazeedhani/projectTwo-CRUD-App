@@ -165,7 +165,6 @@ router.get('/:id/:taskId/view', (req, res) => {
 		.then( task => {
 			res.render('project/show-task', {task, username, loggedIn, userId})
 		})
-	// res.send('view task')
 })
 
 

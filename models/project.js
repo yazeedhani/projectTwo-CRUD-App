@@ -20,11 +20,6 @@ const projectSchema = new Schema(
 		],
 		// must query the users on controllers
 		group: [],
-			// [
-			// 	{ 	type: Schema.Types.ObjectID,
-			// 		ref: 'User'
-			// 	}
-			// ]
 		owner: {
 			type: Schema.Types.ObjectID,
 			ref: 'User'
