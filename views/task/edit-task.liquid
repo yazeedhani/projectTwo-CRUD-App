@@ -13,11 +13,31 @@
                     class="form-control"
                 >
                 <select name="category" class="form-control">
-                    <option>Backlog</option>
-                    <option>Need Help</option>
-                    <option>In Progress</option>
-                    <option>In Review</option>
-                    <option>Ready</option>
+                    <option 
+                        {% if task.category == 'Backlog' %}
+                            selected
+                        {% endif %}
+                    >Backlog</option>
+                    <option
+                        {% if task.category == 'Need Help' %}
+                            selected
+                        {% endif %}
+                    >Need Help</option>
+                    <option
+                        {% if task.category == 'In Progress' %}
+                            selected
+                        {% endif %}
+                    >In Progress</option>
+                    <option
+                        {% if task.category == 'In Review' %}
+                            selected
+                        {% endif %}
+                    >In Review</option>
+                    <option
+                        {% if task.category == 'Ready' %}
+                            selected
+                        {% endif %}    
+                    >Ready</option>
                 </select>
                 <textarea name="description" cols="30" rows="10" placeholder="{{ task.description }}"></textarea>
                 <!-- <input 

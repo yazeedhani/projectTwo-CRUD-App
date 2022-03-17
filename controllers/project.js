@@ -140,9 +140,10 @@ router.put('/:id', (req, res) => {
 	// Get the project ID
 	const projectId = req.params.id
 	const projectName = req.body.name
+	const projectGroup = req.body.group.split(',')
 	console.log('this is the project id: ', projectId)
 	// Tell Mongoose to update the project
-	Project.findByIdAndUpdate(projectId, {name: projectName}, { new: true })
+	Project.findByIdAndUpdate(projectId, {name: projectName, group: projectGroup}, { new: true })
 		.then( project => {
 			res.redirect(`/projects/${projectId}`)
 		})

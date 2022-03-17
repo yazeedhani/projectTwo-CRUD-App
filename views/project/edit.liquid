@@ -12,6 +12,14 @@
                     value="{{ project.name }}"
                     class="form-control"
                 >
+                <label class="form-label">Edit Group</label>
+                <p style="font-size: 10px;">* Remove or add usernames from the populated group list. Remove any unnecessary commas.</p>
+                <input 
+                    type="text" 
+                    name="group" 
+                    value="{{ project.group | join: ", " }}"
+                    class="form-control"
+                >
             </fieldset>
             <input type="submit" value="Edit Project" class="btn btn-success">
         </form>
