@@ -19,6 +19,10 @@
                 {{user}}, 
             {% endfor %}
         </p>
+        <span>Timezone: {{project.timezone}}</span>
+        <span>Date: {{todaysDate}}</span>
+        <span>Time: {{time}}</span>
+        <span>Day of Week: {{dayOfWeek}}</span>
         <div class="row">
             <div class="column"><h2>Backlog</h2>
                 {% for task in tasks %}

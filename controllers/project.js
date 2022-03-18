@@ -6,6 +6,7 @@ const Project = require('../models/project')
 const Task = require('../models/task')
 const { populate } = require('../models/user')
 const User = require('../models/user')
+const fetch = require('node-fetch')
 
 // Create router
 const router = express.Router()
@@ -77,6 +78,8 @@ router.post('/', (req, res) => {
 	console.log(req.body)
 	Project.create(req.body)
 		.then( project => {
+			// This automatically add the owner to the groups list ********************************** Work on this later, after the API
+			// Remove the emtpy string from the group array if no group members are added.
 			project.group.push(req.session.username)
 			project.save()
 			console.log('this was returned from create', project)
@@ -237,12 +240,32 @@ router.get('/:id', (req, res) => {
 			return tasks
 		})
 	
+
 	// Catch all the promises from above (projectQuery, taskQuery)
 	Promise.all([projectQuery, taskQuery])
 		.then( response => {
 			const project = response[0]
 			const tasks = response[1]
-			res.render('project/show', { project, tasks, username, loggedIn, userId })
+			// let todaysDate
+			// let time 
+			// let dayOfWeek 
+			fetch(`https://www.timeapi.io/api/Time/current/zone?timeZone=${project.timezone}`)
+			// Get the response from the API and convert it to JSON
+			.then( responseData => {
+				return responseData.json()
+			})
+			// Render project dashboard in show.liquid
+			.then( timezoneData => {
+				let todaysDate = timezoneData.date
+				let time = timezoneData.time
+				let dayOfWeek = timezoneData.dayOfWeek
+				console.log(timezoneData)
+				res.render('project/show', { project, tasks, username, loggedIn, userId, dayOfWeek, todaysDate, time })
+			})
+			// Or display any errors
+			.catch( error => {
+				res.json({error})
+			})
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)

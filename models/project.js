@@ -20,6 +20,10 @@ const projectSchema = new Schema(
 		],
 		// must query the users on controllers
 		group: [],
+		timezone: {
+			type: String,
+			required: true
+		},
 		owner: {
 			type: Schema.Types.ObjectID,
 			ref: 'User'
