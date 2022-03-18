@@ -16,7 +16,11 @@
         <p>Project owner: {{project.owner.username}}</p>
         <p>Project members:
             {% for user in project.group %}
-                {{user}}, 
+                {% if user == project.group.last %}
+                    {{user}}
+                {% else %}
+                    {{user}},
+                {% endif %} 
             {% endfor %}
         </p>
         <span>Timezone: {{project.timezone}}</span>

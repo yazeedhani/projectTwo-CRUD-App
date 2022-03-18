@@ -74,6 +74,13 @@ router.post('/', (req, res) => {
 	// The group memebers will be entered in the form as a comma-separated list
 	// Need to split that list into an array and update it to req.body.group
 	let groupMembers = req.body.group.split(',')
+	for(let i = 0; i < groupMembers.length; i++)
+	{
+		if(groupMembers[i] === '')
+		{
+			groupMembers.splice(i, 1)
+		}
+	}
 	req.body.group = groupMembers
 	console.log(req.body)
 	Project.create(req.body)
