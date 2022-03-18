@@ -12,8 +12,9 @@
                     Owner: {{ project.owner.username }}
                 </h5>
                 <!-- Display all the usernames in the group -->
+                Members: 
                 {% for user in project.group %}
-                    <h6>{{user}}</h6>
+                    <p>{{user}}</p>
                 {% endfor %}
                 <a href="/projects/{{ project.id }}" class="btn btn-info">
                     View {{ project.name }}

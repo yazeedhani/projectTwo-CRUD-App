@@ -19,6 +19,9 @@
     <header>
         {% render './navbar.liquid', loggedIn: loggedIn, username: username, userId: userId %}
     </header>
+    <div>
+        {% render 'location/timezone.liquid', loggedIn: loggedIn, username: username, userId: userId, tz: tz %}
+    </div>
     <main>
         {% block content %} 
         {% endblock %}

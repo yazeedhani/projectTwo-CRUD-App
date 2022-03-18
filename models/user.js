@@ -13,6 +13,10 @@ const UserSchema = new Schema(
 			type: String, 
 			required: true 
 		},
+		location: {
+			type: String,
+			required: true
+		},
 		// firstName: {
 		// 	type: String,
 		// 	required: true

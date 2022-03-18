@@ -13,7 +13,32 @@
             <form action="/projects/{{ task.project.id }}/{{ task.id }}?_method=DELETE" method="POST">
                 <input type="submit" value="X" class="btn btn-danger">
             </form>
-            {% endif %}
+        {% endif %}
+        <div class="col-md-6">
+            <form action="/comments/{{task.project.id}}/{{task.id}}" method="POST">
+                <fieldset>
+                    <legend>Add Comment</legend>
+                    <label class="form-label">Comment: </label>
+                    <input type="text" class="form-control" name="note" placeholder="Enter comment here...">
+                </fieldset>
+                <input type="submit" class="btn btn-success" value="Add Comment">
+            </form>
+        </div>
+        <!-- We need and if statement -->
+        <!-- This will solve a potential problem -->
+        <!-- If the fruit has no comments, we won't even try to show any -->
+        {% if task.comments.length > 0 %}
+            <!-- Here we'll add our comment container -->
+            <div class="container-sm justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <!-- Here we need to loop over the comments -->
+                    <!-- For every comment, render a comment.liquid block -->
+                    {% for comment in task.comments %}
+                        {% render '../comment.liquid', comment: comment, userId: userId, task: task %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
         <a href="/projects/{{ task.project.id }}/" class="btn btn-success">Go Back</a>
     </div>
 {% endblock %}

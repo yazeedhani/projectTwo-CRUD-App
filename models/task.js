@@ -31,8 +31,8 @@ const taskSchema = new Schema({
     project: {
 			type: Schema.Types.ObjectID,
 			ref: 'Project'
-    }
-    // comment: [commentSchema]
+    },
+    comments: [commentSchema]
 }, {timestamps: true})
 
 // Make our Task model that will use the Schema
