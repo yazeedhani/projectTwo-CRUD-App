@@ -19,15 +19,15 @@ app.use('/projects', ProjectRouter)
 app.use('/comments', CommentRouter)
 
 app.get('/', (req, res) => {
-    const { username, userId, loggedIn, tz } = req.session
+    const { username, userId, loggedIn } = req.session
 	console.log('req.session: ', req.session)
-	res.render('index.liquid', { loggedIn, username, userId, tz })
+	res.render('index.liquid', { loggedIn, username, userId })
 })
 
 app.get('/error', (req, res) => {
 	const error = req.query.error || 'This Page Does Not Exist'
-    const { username, loggedIn, userId, tz } = req.session
-	res.render('error.liquid', { error, username, loggedIn, userId, tz })
+    const { username, loggedIn, userId } = req.session
+	res.render('error.liquid', { error, username, loggedIn, userId})
 })
 
 // if page is not found, send to error page

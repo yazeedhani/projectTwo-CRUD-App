@@ -26,21 +26,6 @@ router.use((req, res, next) => {
 })
 
 /***************** Routes ******************/
-
-// index ALL
-// router.get('/', (req, res) => {
-// 	Project.find({})
-// 		.then(examples => {
-// 			const username = req.session.username
-// 			const loggedIn = req.session.loggedIn
-			
-// 			res.render('examples/index', { examples, username, loggedIn })
-// 		})
-// 		.catch(error => {
-// 			res.redirect(`/error?error=${error}`)
-// 		})
-// })
-
 // INDEX that shows only the user's projects
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
@@ -74,6 +59,7 @@ router.post('/', (req, res) => {
 	// The group memebers will be entered in the form as a comma-separated list
 	// Need to split that list into an array and update it to req.body.group
 	let groupMembers = req.body.group.split(',')
+	// remove any empty strings from groupMembers
 	for(let i = 0; i < groupMembers.length; i++)
 	{
 		if(groupMembers[i] === '')
@@ -247,15 +233,12 @@ router.get('/:id', (req, res) => {
 			return tasks
 		})
 	
-
 	// Catch all the promises from above (projectQuery, taskQuery)
 	Promise.all([projectQuery, taskQuery])
 		.then( response => {
 			const project = response[0]
 			const tasks = response[1]
-			// let todaysDate
-			// let time 
-			// let dayOfWeek 
+
 			fetch(`https://www.timeapi.io/api/Time/current/zone?timeZone=${project.timezone}`)
 			// Get the response from the API and convert it to JSON
 			.then( responseData => {
@@ -266,7 +249,7 @@ router.get('/:id', (req, res) => {
 				let todaysDate = timezoneData.date
 				let time = timezoneData.time
 				let dayOfWeek = timezoneData.dayOfWeek
-				console.log(timezoneData)
+				// console.log(timezoneData)
 				res.render('project/show', { project, tasks, username, loggedIn, userId, dayOfWeek, todaysDate, time })
 			})
 			// Or display any errors
@@ -288,6 +271,11 @@ router.delete('/:id/:taskId', (req, res) => {
 	Task.findByIdAndRemove(taskId)
 		.then( task => {
 			// console.log('this is the response from FBID ', task)
+			Project.findById(projectId)
+				.then( project => {
+					console.log(project.tasks.indexOf(taskId))
+					project.tasks.splice(project.tasks.indexOf(taskId), 1)
+				})
 			res.redirect(`/projects/${task.project}`)
 		})
 		.catch(error => {
@@ -311,7 +299,14 @@ router.delete('/:id', (req, res) => {
 	// Get the project id
 	const projectId = req.params.id
 	// Delete project's tasks
-	// Project.findByIdAndUpdate(projectId, {tasks: []}, {new: true})
+	Task.deleteMany({project: projectId})
+	.then(task => {
+		console.log('this is the response from FBID ', task)
+		// res.redirect('/projects/mine')
+	})
+	.catch(error => {
+		res.redirect(`/error?error=${error}`)
+	})
 	// Delete the project
 	Project.findByIdAndRemove(projectId)
 		.then(project => {
@@ -322,8 +317,21 @@ router.delete('/:id', (req, res) => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
-
-
+// router.delete('/:id', (req, res) => {
+// 	// Get the project id
+// 	const projectId = req.params.id
+// 	// Delete project's tasks
+// 	// Project.findByIdAndUpdate(projectId, {tasks: []}, {new: true})
+// 	// Delete the project
+// 	Project.findByIdAndRemove(projectId)
+// 		.then(project => {
+// 			// console.log('this is the response from FBID ', project)
+// 			res.redirect('/projects/mine')
+// 		})
+// 		.catch(error => {
+// 			res.redirect(`/error?error=${error}`)
+// 		})
+// })
 /******************************************************/
 
 // Export the Router

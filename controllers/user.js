@@ -63,7 +63,7 @@ router.post('/login', async (req, res) => {
 					req.session.username = username
 					req.session.loggedIn = true
 					req.session.userId = user.id
-					req.session.tz = user.location
+					// req.session.tz = user.location
 					console.log('session user id', req.session.userId)
 					// redirect to /projects/mine if login is successful
 					res.redirect('/projects/mine')
