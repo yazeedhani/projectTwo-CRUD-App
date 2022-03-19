@@ -20,9 +20,12 @@
                     View {{ project.name }}
                 </a>
             </div>
-            <form action="/projects/{{ project.id }}?_method=DELETE" method="POST">
-                <input type="submit" value="X" class="btn btn-danger">
-            </form>
+            <!-- If you are not the owner, then you cannot delete the project from your projects list -->
+            {% if project.owner == userId %}
+                <form action="/projects/{{ project.id }}?_method=DELETE" method="POST">
+                    <input type="submit" value="X" class="btn btn-danger">
+                </form>
+            {% endif %}
         </div>
         {% endfor %}
     </div>

@@ -29,14 +29,13 @@ router.use((req, res, next) => {
 // INDEX that shows only the user's projects
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
-    const { username, userId, loggedIn, tz } = req.session
+    const { username, userId, loggedIn} = req.session
 	// Display the projects you created and the projects you are a group member of
 	Project.find({ $or: [{ owner: userId }, {group: { $in: [username] } }] })
 		// gives you back thew whole object associated with the ID queried above
 		.populate('owner')
 		.then( projects => {
-			console.log(projects)
-			res.render('project/index', { projects, username, loggedIn, tz })
+			res.render('project/index', { projects, username, loggedIn, userId })
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
@@ -75,7 +74,6 @@ router.post('/', (req, res) => {
 			// Remove the emtpy string from the group array if no group members are added.
 			project.group.push(req.session.username)
 			project.save()
-			console.log('this was returned from create', project)
 			res.redirect('/projects/mine')
 		})
 		.catch(error => {
@@ -110,7 +108,6 @@ router.post('/:id/new', (req, res) => {
 				project.tasks.push(task._id)
 				project.save()
 			})
-			console.log(task)
 			res.redirect(`/projects/${projectId}`)
 	})
 })
@@ -122,7 +119,7 @@ router.get('/:id/edit', (req, res) => {
 	// we need to get the project id
 	const projectId = req.params.id
 	Project.findById(projectId)
-		.then(project => {
+		.then( project => {
 			const {username, loggedIn, userId} = req.session
 			res.render('project/edit', { project, username, loggedIn, userId })
 		})
@@ -159,7 +156,6 @@ router.get('/:id/:taskId/edit', (req, res) => {
 		.populate('project')
 		.populate('owner')
 		.then( task => {
-				// console.log(task)
 				const {username, loggedIn, userId} = req.session
 				res.render('task/edit-task', {task, username, loggedIn, userId})
 		})
@@ -200,11 +196,9 @@ router.get('/:id/:taskId/view', (req, res) => {
 		.populate('owner')
 		.populate('comments.author')
 		.then( task => {
-			// console.log('THis is the task: ', task)
 			Project.findById(projectId)
 				.populate('owner')
 				.then( project => {
-					// console.log('This is the project:' , project)
 					res.render('task/show-task', {project, task, username, loggedIn, userId})
 				})
 		})
@@ -221,15 +215,12 @@ router.get('/:id', (req, res) => {
 		.populate('owner')
 		.then( project => {
 		// Display task owner on each task in project dashboard
-			// console.log(project.tasks)
-			// console.log(project)
 			return project
 		})
 	//	Find all the tasks that share the same project ID	
 	const taskQuery = Task.find({project: projectId})
 		.populate('owner')
 		.then( tasks => {
-			// console.log('these are the tasks for this project: ', tasks)
 			return tasks
 		})
 	
@@ -249,7 +240,6 @@ router.get('/:id', (req, res) => {
 				let todaysDate = timezoneData.date
 				let time = timezoneData.time
 				let dayOfWeek = timezoneData.dayOfWeek
-				// console.log(timezoneData)
 				res.render('project/show', { project, tasks, username, loggedIn, userId, dayOfWeek, todaysDate, time })
 			})
 			// Or display any errors
@@ -271,10 +261,14 @@ router.delete('/:id/:taskId', (req, res) => {
 	Task.findByIdAndRemove(taskId)
 		.then( task => {
 			// console.log('this is the response from FBID ', task)
+			// Removes the task from the tasks array in Project
 			Project.findById(projectId)
 				.then( project => {
-					console.log(project.tasks.indexOf(taskId))
 					project.tasks.splice(project.tasks.indexOf(taskId), 1)
+					project.save()
+				})
+				.catch(error => {
+					res.redirect(`/error?error=${error}`)
 				})
 			res.redirect(`/projects/${task.project}`)
 		})
@@ -282,56 +276,30 @@ router.delete('/:id/:taskId', (req, res) => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
-// router.delete('/:id/:taskId', (req, res) => {
-// 	// Get the task id
-// 	const taskId = req.params.taskId
-// 	Task.findByIdAndRemove(taskId)
-// 		.then( task => {
-// 			console.log('this is the response from FBID ', task)
-// 			res.redirect(`/projects/${task.project}`)
-// 		})
-// 		.catch(error => {
-// 			res.redirect(`/error?error=${error}`)
-// 		})
-// })
+
 // DELETE project route --> delete a project and its tasks
 router.delete('/:id', (req, res) => {
 	// Get the project id
 	const projectId = req.params.id
 	// Delete project's tasks
 	Task.deleteMany({project: projectId})
-	.then(task => {
-		console.log('this is the response from FBID ', task)
-		// res.redirect('/projects/mine')
-	})
-	.catch(error => {
-		res.redirect(`/error?error=${error}`)
-	})
+		.then(task => {
+			console.log('this is the response from FBID ', task)
+			// res.redirect('/projects/mine')
+		})
+		.catch(error => {
+			res.redirect(`/error?error=${error}`)
+		})
 	// Delete the project
 	Project.findByIdAndRemove(projectId)
 		.then(project => {
-			// console.log('this is the response from FBID ', project)
 			res.redirect('/projects/mine')
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
-// router.delete('/:id', (req, res) => {
-// 	// Get the project id
-// 	const projectId = req.params.id
-// 	// Delete project's tasks
-// 	// Project.findByIdAndUpdate(projectId, {tasks: []}, {new: true})
-// 	// Delete the project
-// 	Project.findByIdAndRemove(projectId)
-// 		.then(project => {
-// 			// console.log('this is the response from FBID ', project)
-// 			res.redirect('/projects/mine')
-// 		})
-// 		.catch(error => {
-// 			res.redirect(`/error?error=${error}`)
-// 		})
-// })
+
 /******************************************************/
 
 // Export the Router
