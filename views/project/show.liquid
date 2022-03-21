@@ -1,111 +1,111 @@
 <!-- This is displays the project dashboard along with its tasks and the task owner -->
 {% layout 'layout.liquid' %}
 {% block content %}
+<div id="timezone-div">
+    <div id="timezone-flex">
+        <span class="timezone">{{project.timezone}}</span>
+        <span class="timezone">{{todaysDate}}</span>
+        <span class="timezone">{{time}}</span>
+        <span class="timezone">{{dayOfWeek}}</span>
+    </div>
+</div>
 <div class="container-md">
     <article>
         <h2>{{ project.name }}</h2>
-        <a href="/projects/{{ project.id }}/new" class="btn btn-success">Create Task</a>
         {% if project.owner == userId %}
         <div class="btn-group">
-            <a href="/projects/{{ project.id }}/edit" class="btn btn-primary">Edit</a>
+            <a href="/projects/{{ project.id }}/edit" class="btn btn-primary edit-btn">Edit</a>
             <form action="/projects/{{ project.id }}?_method=DELETE" method="POST">
-                <input type="submit" value="Delete" class="btn btn-danger">
+                <input type="submit" value="Delete Project" class="btn btn-danger">
             </form>
         </div>
         {% endif %}
-        <p>Project owner: {{project.owner.username}}</p>
-        <p>Project members:
+        <br><br>
+        <p><strong>Owner:</strong> {{project.owner.username}} <br> <strong>Members:</strong>
             {% for user in project.group %}
                 {% if user == project.group.last %}
                     {{user}}
                 {% else %}
                     {{user}},
                 {% endif %} 
-            {% endfor %}
-        </p>
-        <span>Timezone: {{project.timezone}}</span>
-        <span>Date: {{todaysDate}}</span>
-        <span>Time: {{time}}</span>
-        <span>Day of Week: {{dayOfWeek}}</span>
+            {% endfor %}</p>
+
+        <a href="/projects/{{ project.id }}/new" class="btn btn-success create-task-btn">+ Create Task</a>
+
+        <br>
         <div class="row">
-            <div class="column"><h2>Backlog</h2>
+            <div class="column" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"><h4>Backlog</h4>
                 {% for task in tasks %}
                     {% if task.category == 'Backlog' %}
-                    <div class="card">
-                        <h3>{{ task.name }}</h3>
-                        <p>{{ task.owner.username }}</p>
-                        <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
-                        {% if project.owner == userId %}
-                            <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
-                                <input type="submit" value="X" class="btn btn-danger">
-                            </form>
-                        {% endif %}
-                    </div>
+                        <div class="card" draggable="true" ondragstart="drag(event)" id="drag1">
+                            <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="task-name-link"> <h5>{{ task.name }}</h5></a>
+                            <p class="task-owner-dashboard">{{ task.owner.username }}</p>
+                            {% if task.owner == userId %}
+                                <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
+                                    <input type="submit" value="X" class="btn btn-danger delete-task-dashboard">
+                                </form>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 {% endfor %}
             </div>
-            <div class="column"><h2>Need Help</h2>
+            <div class="column" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><h4>Need Help</h4>
                 {% for task in tasks %}
                     {% if task.category == 'Need Help' %}
-                    <div class="card">
-                        <h3>{{ task.name }}</h3>
-                        <p>{{ task.owner.username }}</p>
-                        <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
-                        {% if project.owner == userId %}
-                            <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
-                                <input type="submit" value="X" class="btn btn-danger">
-                            </form>
-                        {% endif %}
-                    </div>
+                        <div class="card" draggable="true" ondragstart="drag(event)" id="drag2">
+                            <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="task-name-link"> <h5>{{ task.name }}</h5></a>
+                            <p class="task-owner-dashboard">{{ task.owner.username }}</p>
+                            {% if task.owner == userId %}
+                                <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
+                                    <input type="submit" value="X" class="btn btn-danger delete-task-dashboard">
+                                </form>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 {% endfor %}
             </div>
-            <div class="column"><h2>In Progress</h2>
+            <div class="column" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"><h4>In Progress</h4>
                 {% for task in tasks %}
                     {% if task.category == 'In Progress' %}
-                    <div class="card">
-                        <h3>{{ task.name }}</h3>
-                        <p>{{ task.owner.username }}</p>
-                        <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
-                        {% if project.owner == userId %}
-                            <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
-                                <input type="submit" value="X" class="btn btn-danger">
-                            </form>
-                        {% endif %}
-                    </div>
+                        <div class="card" draggable="true" ondragstart="drag(event)" id="drag3">
+                            <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="task-name-link"><h5>{{ task.name }}</h5></a>
+                            <p class="task-owner-dashboard">{{ task.owner.username }}</p>
+                            {% if task.owner == userId  %}
+                                <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
+                                    <input type="submit" value="X" class="btn btn-danger delete-task-dashboard">
+                                </form>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 {% endfor %}
             </div>
-            <div class="column"><h2>In Review</h2>
+            <div class="column" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)"><h4>In Review</h4>
                 {% for task in tasks %}
                     {% if task.category == 'In Review' %}
-                    <div class="card">
-                        <h3>{{ task.name }}</h3>
-                        <p>{{ task.owner.username }}</p>
-                        <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
-                        <!-- look at task.project.id again -->
-                        {% if project.owner == userId %}
-                            <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
-                                <input type="submit" value="X" class="btn btn-danger">
-                            </form>
-                        {% endif %}
-                    </div>
+                        <div class="card" draggable="true" ondragstart="drag(event)" id="drag4">
+                            <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="task-name-link"><h5>{{ task.name }}</h5></a>
+                            <p class="task-owner-dashboard">{{ task.owner.username }}</p>
+                            {% if task.owner == userId %}
+                                <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
+                                    <input type="submit" value="X" class="btn btn-danger delete-task-dashboard">
+                                </form>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 {% endfor %}
             </div>
-            <div class="column"><h2>Ready</h2>
+            <div class="column" id="div5" ondrop="drop(event)" ondragover="allowDrop(event)"><h4>Ready</h4>
                 {% for task in tasks %}
                     {% if task.category == 'Ready' %}
-                    <div class="card">
-                        <h3>{{ task.name }}</h3>
-                        <p>{{ task.owner.username }}</p>
-                        <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="btn btn-primary">View</a>
-                        {% if project.owner == userId %}
-                            <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
-                                <input type="submit" value="X" class="btn btn-danger">
-                            </form>
-                        {% endif %}
-                    </div>
+                        <div class="card" draggable="true" ondragstart="drag(event)" id="drag5">
+                            <a href="/projects/{{ task.project }}/{{ task.id }}/view" class="task-name-link"><h5>{{ task.name }}</h5></a>
+                            <p class="task-owner-dashboard">{{ task.owner.username }}</p>
+                            {% if task.owner == userId%}
+                                <form action="/projects/{{ task.project }}/{{ task.id }}?_method=DELETE" method="POST">
+                                    <input type="submit" value="X" class="btn btn-danger delete-task-dashboard">
+                                </form>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 {% endfor %}
             </div>

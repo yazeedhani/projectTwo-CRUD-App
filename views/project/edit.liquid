@@ -4,25 +4,36 @@
     <div class="container-sm">
         <form action="/projects/{{project.id}}?_method=PUT" method="POST">
             <fieldset>
-                <legend>Edit {{project.name}}</legend>
-                <label class="form-label">Project Name: </label>
+                <legend><h4>Edit {{project.name}}</h4></legend>
+                <label class="form-label">Name: </label>
                 <input 
                     type="text" 
                     name="name" 
                     value="{{ project.name }}"
                     class="form-control"
                 >
-                <label class="form-label">Edit Group</label>
+                <br>
+                <label class="form-label">Timezone: </label>
+                <input 
+                    type="text" 
+                    name="timezone" 
+                    value="{{ project.timezone }}"
+                    class="form-control"
+                >
+                <br>
+                <label class="form-label">Members:</label>
                 <p style="font-size: 10px;">* Remove or add usernames from the populated group list. Remove any unnecessary commas.</p>
                 <input 
                     type="text" 
                     name="group" 
-                    value="{{ project.group | join: ", " }}"
+                    value="{{ project.group | join: "," }}"
                     class="form-control"
                 >
             </fieldset>
+            <br>
             <input type="submit" value="Edit Project" class="btn btn-success">
         </form>
+        <br>
         <a href="/projects/{{ project.id }}/" class="btn btn-success">Go Back</a>
     </div>
 {% endblock %}

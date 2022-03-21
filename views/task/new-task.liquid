@@ -4,7 +4,7 @@
     <form action="/projects/{{projectId}}/new" method="POST">
         <fieldset>
             <legend>Create New Task</legend>
-            <label class="form-label">Task Name: </label>
+            <label class="form-label">Name: </label>
             <input 
                 type="text" 
                 name="name" 
@@ -12,6 +12,8 @@
                 class="form-control"
                 required
             >
+            <br>
+            <label class="form-label">Category: </label>
             <select name="category" class="form-control" required>
                 <option>Backlog</option>
                 <option>Need Help</option>
@@ -19,11 +21,15 @@
                 <option>In Review</option>
                 <option>Ready</option>
             </select>
-            <textarea name="description" cols="30" rows="10" placeholder="Task description"></textarea>
+            <br>
+            <label class="form-label">Description:</label>
+            <br>
+            <textarea name="description" cols="50" rows="10" placeholder="Task description"></textarea>
 
         </fieldset>
         <input type="submit" value="Create New Task" class="btn btn-success">
     </form>
+    <br>
     <a href="/projects/{{ projectId }}/" class="btn btn-success">Go Back</a>
 </div>
 {% endblock %}

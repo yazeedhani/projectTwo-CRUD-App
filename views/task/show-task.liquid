@@ -2,29 +2,34 @@
 {% layout 'layout.liquid' %}
 {% block content %}
     <div class="container-sm">
-        <h2>Task Name: {{ task.name }}</h2>
-        <p>Description: {{ task.description }}</p>
-        <p>Category: {{ task.category }}</p>
-        <p>Owner: {{ task.owner.username }}</p>
-        <p>Name: {{ task.project.name }}</p>
+        <h2>{{ task.name }}</h2>
         <!-- The task owner or project owner are only allowed to use these buttons -->
         {% if task.owner.id == userId or project.owner.username == username%}
-            <a href="/projects/{{ task.project.id }}/{{ task.id }}/edit" class="btn btn-primary">Edit</a>
-            <form action="/projects/{{ task.project.id }}/{{ task.id }}?_method=DELETE" method="POST">
-                <input type="submit" value="X" class="btn btn-danger">
-            </form>
+            <div class="btn-group">
+                <a href="/projects/{{ task.project.id }}/{{ task.id }}/edit" class="btn btn-primary edit-btn">Edit</a>
+                <form action="/projects/{{ task.project.id }}/{{ task.id }}?_method=DELETE" method="POST">
+                    <input type="submit" value="Delete Task" class="btn btn-danger">
+                </form>
+            </div>
         {% endif %}
+        <p><h6>Description:</h6> {{ task.description }}</p>
+        <p><h6>Category:</h6> {{ task.category }}</p>
+        <p><h6>Owner:</h6> {{ task.owner.username }}</p>
+        <p><h6>Project Name:</h6> {{ task.project.name }}</p>
         <div class="col-md-6">
             <form action="/comments/{{task.project.id}}/{{task.id}}" method="POST">
                 <fieldset>
-                    <legend>Add Comment</legend>
-                    <label class="form-label">Comment: </label>
-                    <input type="text" class="form-control" name="note" placeholder="Enter comment here...">
+                    <legend>Add Notes</legend>
+                    <label class="form-label">Note: </label>
+                    <!-- <input type="text" class="form-control" name="note" placeholder="Enter comment here..."> -->
+                    <br>
+                    <textarea name="note" cols="40" rows="7" placeholder="Enter note here..."></textarea>
                 </fieldset>
-                <input type="submit" class="btn btn-success" value="Add Comment">
+                <br>
+                <input type="submit" class="btn btn-success" value="Add Note">
             </form>
         </div>
-        <!-- We need and if statement -->
+        <!-- We need an if statement -->
         <!-- This will solve a potential problem -->
         <!-- If the fruit has no comments, we won't even try to show any -->
         {% if task.comments.length > 0 %}
@@ -39,6 +44,7 @@
                 </div>
             </div>
         {% endif %}
+        <br>
         <a href="/projects/{{ task.project.id }}/" class="btn btn-success">Go Back</a>
     </div>
 {% endblock %}

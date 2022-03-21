@@ -4,14 +4,16 @@
     <div class="container-sm">
         <form action="/projects/{{ task.project.id }}/{{ task.id }}?_method=PUT" method="POST">
             <fieldset>
-                <legend>Edit {{task.name}}</legend>
-                <label class="form-label">Task Name: </label>
+                <legend><h4>Edit {{task.name}}</h4></legend>
+                <label class="form-label">Name: </label>
                 <input 
                     type="text" 
                     name="name" 
                     value="{{ task.name }}"
                     class="form-control"
                 >
+                <br>
+                <label class="form-label">Category: </label>
                 <select name="category" class="form-control">
                     <option 
                         {% if task.category == 'Backlog' %}
@@ -39,16 +41,14 @@
                         {% endif %}    
                     >Ready</option>
                 </select>
+                <br>
+                <label class="form-label">Description: </label>
+                <br>
                 <textarea name="description" cols="30" rows="10" placeholder="{{ task.description }}"></textarea>
-                <!-- <input 
-                    type="text" 
-                    name="owner" 
-                    value="{{ task.owner }}"
-                    class="form-control"
-                > -->
             </fieldset>
             <input type="submit" value="Edit Task" class="btn btn-success">
         </form>
+        <br>
         <a href="/projects/{{ task.project.id }}/{{ task.id }}/view" class="btn btn-success">Go Back</a>
     </div>
 {% endblock %}

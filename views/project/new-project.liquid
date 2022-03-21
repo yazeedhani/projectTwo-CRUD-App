@@ -5,7 +5,7 @@
     <form action="/projects" method="POST">
         <fieldset>
             <legend>Create New Project</legend>
-            <label class="form-label">Project Name: </label>
+            <label class="form-label">Name: </label>
             <input 
                 type="text" 
                 name="name" 
@@ -13,16 +13,18 @@
                 class="form-control"
                 required
             >
-            <label class="form-label">Project Members:</label>
+            <br>
+            <label class="form-label">Members:</label>
             <input 
                 type="text" 
                 name="group" 
                 placeholder="Enter groups members separated by a comma"
                 class="form-control"
             >
-            <label class="form-label">Project Timezone:</label>
-            <p style="font-size: 10px;">* <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="_blank">Not sure what your timezone is? Click here.</a></p>
+            <br>
+            <label class="form-label">Timezone:</label>
             <input type="text" name="timezone" placeholder="Enter your full IANA timezone, Ex. America/Denver" class="form-control" required>
+            <p style="font-size: 10px;">* <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="_blank">Not sure what your timezone is? Click here.</a></p>
         </fieldset>
         <input type="submit" value="Create New Project" class="btn btn-success">
     </form>

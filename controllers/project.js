@@ -133,10 +133,11 @@ router.put('/:id', (req, res) => {
 	// Get the project ID
 	const projectId = req.params.id
 	const projectName = req.body.name
+	const projectTimezone = req.body.timezone
 	const projectGroup = req.body.group.split(',')
 	console.log('this is the project id: ', projectId)
 	// Tell Mongoose to update the project
-	Project.findByIdAndUpdate(projectId, {name: projectName, group: projectGroup}, { new: true })
+	Project.findByIdAndUpdate(projectId, {name: projectName, group: projectGroup, timezone: projectTimezone}, { new: true })
 		.then( project => {
 			res.redirect(`/projects/${projectId}`)
 		})
@@ -231,21 +232,21 @@ router.get('/:id', (req, res) => {
 			const tasks = response[1]
 
 			fetch(`https://www.timeapi.io/api/Time/current/zone?timeZone=${project.timezone}`)
-			// Get the response from the API and convert it to JSON
-			.then( responseData => {
-				return responseData.json()
-			})
-			// Render project dashboard in show.liquid
-			.then( timezoneData => {
-				let todaysDate = timezoneData.date
-				let time = timezoneData.time
-				let dayOfWeek = timezoneData.dayOfWeek
-				res.render('project/show', { project, tasks, username, loggedIn, userId, dayOfWeek, todaysDate, time })
-			})
-			// Or display any errors
-			.catch( error => {
-				res.json({error})
-			})
+				// Get the response from the API and convert it to JSON
+				.then( responseData => {
+					return responseData.json()
+				})
+				// Render project dashboard in show.liquid
+				.then( timezoneData => {
+					let todaysDate = timezoneData.date
+					let time = timezoneData.time
+					let dayOfWeek = timezoneData.dayOfWeek
+					res.render('project/show', { project, tasks, username, loggedIn, userId, dayOfWeek, todaysDate, time })
+				})
+				// Or display any errors
+				.catch( error => {
+					res.json({error})
+				})
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)
