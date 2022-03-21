@@ -30,6 +30,7 @@ This application allows users to collaborate on a project my creating project da
 ## RESTful routes for resource Project
 | HTTP Verb | Path | Controller | Used for |
 |-----------|------|------------|----------|
+| GET | /projects/mine | projects#index | display a list of all the projects for the logged in user |
 
 ## Technologies Used
 - NodeJS
