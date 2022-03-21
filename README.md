@@ -15,10 +15,16 @@ This application allows users to collaborate on a project my creating project da
 9. Once finished, the user may sign out.
 
 ## Wireframes
-![SignIn](/Wireframes&ERD/Screen%201.png)
+![SignUp](/Wireframes&ERD/Screen%201.png)
+![SignIn](/Wireframes&ERD/Screen%202.png)
+![SignIn](/Wireframes&ERD/Screen%203.png)
+![SignIn](/Wireframes&ERD/Screen%204.png)
+![SignIn](/Wireframes&ERD/Screen%205.png)
+![SignIn](/Wireframes&ERD/Screen%206.png)
+![SignIn](/Wireframes&ERD/Screen%207.png)
 
 ## ERD
-![ERD]()
+![ERD](/Wireframes&ERD/ERD.jpeg)
 
 ## Technologies Used
 - NodeJS
