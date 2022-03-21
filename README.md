@@ -17,11 +17,11 @@ This application allows users to collaborate on a project my creating project da
 ## Wireframes
 ![SignUp](/Wireframes&ERD/Screen%201.png)
 ![SignIn](/Wireframes&ERD/Screen%202.png)
-![SignIn](/Wireframes&ERD/Screen%203.png)
-![SignIn](/Wireframes&ERD/Screen%204.png)
-![SignIn](/Wireframes&ERD/Screen%205.png)
-![SignIn](/Wireframes&ERD/Screen%206.png)
-![SignIn](/Wireframes&ERD/Screen%207.png)
+![Project Dashboard](/Wireframes&ERD/Screen%203.png)
+![Create New Task](/Wireframes&ERD/Screen%204.png)
+![Create New Project](/Wireframes&ERD/Screen%205.png)
+![My Project](/Wireframes&ERD/Screen%206.png)
+![A Task](/Wireframes&ERD/Screen%207.png)
 
 ## ERD
 ![ERD](/Wireframes&ERD/ERD.jpeg)
