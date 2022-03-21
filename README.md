@@ -27,6 +27,10 @@ This application allows users to collaborate on a project my creating project da
 ## ERD
 ![ERD](/Wireframes&ERD/ERD.jpeg)
 
+## RESTful routes for resource Project
+| HTTP Verb | Path | Controller | Used for |
+|-----------|------|------------|----------|
+
 ## Technologies Used
 - NodeJS
 - Vanilla JS
