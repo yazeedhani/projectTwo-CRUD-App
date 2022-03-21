@@ -1,6 +1,10 @@
 {% layout "layout.liquid" %}
 {% block content %}
-
-    <h1>Welcome To Proma!</h1>
-
+    <div id="welcome-div">
+        <h1 id="welcome-msg">Welcome To Proma!</h1>
+        <div id="auth-btns">
+            <a href="/auth/signup" class="nav-link text-light signup-btn" id="signup">Sign Up</a>
+            <a href="/auth/login" class="nav-link text-light signin-btn" id="signin">Sign In</a>
+        </div>
+    </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-// Import Dependencies
+/***************** DEPENDENCIES ******************/
 const express = require('express')
 const { route } = require('express/lib/application')
 const { redirect, render } = require('express/lib/response')
@@ -8,10 +8,10 @@ const { populate } = require('../models/user')
 const User = require('../models/user')
 const fetch = require('node-fetch')
 
-// Create router
+/***************** Router ******************/
 const router = express.Router()
 
-// Router Middleware
+/***************** Router Middleware ******************/
 // Authorization middleware
 // If you have some resources that should be accessible to everyone regardless of loggedIn status, this middleware can be moved, commented out, or deleted. 
 router.use((req, res, next) => {
@@ -303,5 +303,5 @@ router.delete('/:id', (req, res) => {
 
 /******************************************************/
 
-// Export the Router
+/***************** Export our Router ******************/
 module.exports = router

@@ -1,4 +1,4 @@
-// import dependencies
+/***************** DEPENDENCIES ******************/
 const mongoose = require('./connection')
 
 // This will be a subdocument for the Task Model

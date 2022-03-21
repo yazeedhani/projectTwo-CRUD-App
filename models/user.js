@@ -1,4 +1,4 @@
-// import what I need
+/***************** DEPENDENCIES ******************/
 const { Schema, model } = require('./connection.js')
 
 // create the schema

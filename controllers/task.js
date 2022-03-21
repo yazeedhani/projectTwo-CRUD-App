@@ -1,4 +1,4 @@
-// Import Dependencies
+/***************** DEPENDENCIES ******************/
 const express = require('express')
 const Project = require('../models/project')
 

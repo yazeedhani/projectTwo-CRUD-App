@@ -10,7 +10,16 @@
   width: 50%;
 }
 
+#welcome-msg {
+  text-align: center;
+}
+
 /* DIVs */
+#welcome-div {
+  width: 50%;
+  margin: 150px auto;
+}
+
 .container-sm {
   margin-top: 50px;
 }
@@ -51,6 +60,11 @@
 }
 
 /* BUTTONS */
+#auth-btns {
+  width: 22%;
+  margin: 30px auto;
+}
+
 .btn-danger {
   background-color: tomato;
   border: none;
@@ -63,6 +77,23 @@
 .btn-success:hover {
   background-color: #2f84c2;
   border: none;
+}
+
+.signup-btn, .signin-btn {
+  background-color: #3bbdd1;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  text-align: center;
+}
+.signin-btn:hover, .signup-btn:hover {
+  background-color: #242829;
+}
+
+#signup, #signin {
+  width: 80px;
+  display: inline-block;
 }
 
 .delete-project-dashboard {

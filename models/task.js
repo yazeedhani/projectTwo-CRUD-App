@@ -1,4 +1,4 @@
-// import dependencies
+/***************** DEPENDENCIES ******************/
 const mongoose = require('./connection')
 
 // we also need to import our commentSchema
