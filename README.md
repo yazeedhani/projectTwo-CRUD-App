@@ -31,6 +31,18 @@ This application allows users to collaborate on a project my creating project da
 | HTTP Verb | Path | Controller | Used for |
 |-----------|------|------------|----------|
 | GET | /projects/mine | projects#index | display a list of all the projects for the logged in user |
+| GET | /projects/new | projects#new | return an HTML form for creating a new project dashboard |
+| POST | /projects/ | projects#create | create a new project |
+| GET | /projects/:projectID/new | projects#new | return an HTML form for creating a new project task |
+| POST | /projects/:projectID | projects#create | create a new project task |
+| GET | /projects/:projectID/edit | projects#edit | return an HTML form for editing a project |
+| PUT | /projects/:projectID | projects#update | update a project |
+| GET | /projects/:projectID/:taskID/edit | projects#edit | return an HTML form for editing a project task |
+| PUT | /projects/:projectID/:taskID | projects#update | update a project task |
+| GET | /projects/:projectID/| projects#show | show an individual project dashboard |
+| GET | /projects/:projectID/:taskID | projects#show | show an individual project task |
+| DELETE | /projects/:projectID/ | projects#destroy | delete an individual project |
+| DELETE | /projects/:projectID/:taskID | projects#destroy | delete an individual project task |
 
 ## Technologies Used
 - NodeJS
