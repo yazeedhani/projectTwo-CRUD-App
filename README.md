@@ -15,7 +15,7 @@ This application allows users to collaborate on a project my creating project da
 9. Once finished, the user may sign out.
 
 ## Wireframes
-![SignIn](../Wireframes&ERD/signin.png)
+![SignIn](/Wireframes&ERD/Screen 1.png)
 
 ## ERD
 ![ERD]()
