@@ -8,23 +8,50 @@ This application allows users to collaborate on a project my creating project da
 2. When the user logs into their account, their homepage will be a list of their project dashboards.
 3. A user can click on a project dashboard to view it.
 4. Inside a project dashboard are 5 categories viewed as columns: Backlog, Need Help, In Progress, In Review, and Ready.
-5. The user can create a task and select which category to place it in.
-6. A user is able to only delete their own tasks and project dashboards.
-7. Users can comment on each others tasks when viewing a single task.
-8. Once finished, the user may sign out.
+5. When a user creates a project, they type which timezone the team on the project is in, alongside the time, date, and day of the week.
+6. The user can create a task and select which category to place it in.
+7. A user is able to only delete their own tasks and project dashboards.
+8. Users can comment on each others tasks when viewing a single task.
+9. A user may be a part of other projects created by other users.
+10. Once finished, the user may sign out.
 
 ## Wireframes
-![SignIn](signin.png)
+![SignUp](/Wireframes&ERD/Screen%201.png)
+![SignIn](/Wireframes&ERD/Screen%202.png)
+![Project Dashboard](/Wireframes&ERD/Screen%203.png)
+![Create New Task](/Wireframes&ERD/Screen%204.png)
+![Create New Project](/Wireframes&ERD/Screen%205.png)
+![My Project](/Wireframes&ERD/Screen%206.png)
+![A Task](/Wireframes&ERD/Screen%207.png)
 
 ## ERD
-1[ERD]()
+![ERD](/Wireframes&ERD/ERD.jpeg)
+
+## RESTful routes for resource Project
+| HTTP Verb | Path | Controller | Used for |
+|-----------|------|------------|----------|
+| GET | /projects/mine | projects#index | display a list of all the projects for the logged in user |
+| GET | /projects/new | projects#new | return an HTML form for creating a new project dashboard |
+| POST | /projects/ | projects#create | create a new project |
+| GET | /projects/:projectID/new | projects#new | return an HTML form for creating a new project task |
+| POST | /projects/:projectID | projects#create | create a new project task |
+| GET | /projects/:projectID/edit | projects#edit | return an HTML form for editing a project |
+| PUT | /projects/:projectID | projects#update | update a project |
+| GET | /projects/:projectID/:taskID/edit | projects#edit | return an HTML form for editing a project task |
+| PUT | /projects/:projectID/:taskID | projects#update | update a project task |
+| GET | /projects/:projectID/| projects#show | show an individual project dashboard |
+| GET | /projects/:projectID/:taskID | projects#show | show an individual project task |
+| DELETE | /projects/:projectID/ | projects#destroy | delete an individual project |
+| DELETE | /projects/:projectID/:taskID | projects#destroy | delete an individual project task |
 
 ## Technologies Used
 - NodeJS
+- Vanilla JS
 - LiquidJS
 - MongoDB
 - Mongoose
 - CSS
+- HTML
 - ExpressJS
 
 ## MVP
@@ -33,6 +60,7 @@ This application allows users to collaborate on a project my creating project da
 - Get user to delete project dashboards and tasks
 - Get user to edit their own tasks
 - Get user to comment on tasks.
+- Get user to add other users to their projects.
 
 
 ## Stretch Plan
